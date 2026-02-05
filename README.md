@@ -165,36 +165,6 @@ pytest test_integration_workflows.py -v -s
 - **Single User**: Designed for local deployment
 - **No Persistence**: No database or session storage
 
-## Deployment
-
-See `STREAMLIT_DEPLOYMENT.md` for simple Streamlit Cloud deployment (recommended).
-
-For local deployment, see instructions above.
-
-**API Quota Exceeded:**
-- Gemini free tier: 20 requests/day
-- Wait for quota reset or switch to OpenAI
-- Set `LLM_PROVIDER=openai` in `.env`
-
-**Invalid API Key:**
-- Verify keys in `.env` file
-- Check key permissions and quotas
-- Regenerate keys if needed
-
-**Network Errors:**
-- Check internet connection
-- Verify API endpoints are accessible
-- Check firewall settings
-
-## Deployment to Streamlit Cloud
-
-**Simple 3-Step Deployment:**
-
-1. Push your code to GitHub
-2. Go to https://share.streamlit.io/
-3. Connect your repo and add API keys as secrets
-
-See `STREAMLIT_DEPLOYMENT.md` for detailed instructions.
 
 ## Future Enhancements
 
