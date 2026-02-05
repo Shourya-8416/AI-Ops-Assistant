@@ -55,7 +55,7 @@ class Config:
         
         # Gemini Configuration
         self.gemini_api_key: str = get_config("GEMINI_API_KEY", "")
-        self.gemini_model: str = get_config("GEMINI_MODEL", "gemini-1.5-flash")
+        self.gemini_model: str = get_config("GEMINI_MODEL", "gemini-1.5-pro")
         
         # GitHub Configuration (Optional but recommended)
         self.github_token: Optional[str] = get_config("GITHUB_TOKEN") or None
