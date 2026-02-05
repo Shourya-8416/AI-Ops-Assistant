@@ -6,6 +6,9 @@ A production-quality AI-powered operations assistant with multi-agent architectu
 
 The AI Operations Assistant uses specialized agents (Planner, Executor, Verifier) to understand natural language queries, execute tasks using real APIs, and verify results for completeness.
 
+<img width="1919" height="912" alt="image" src="https://github.com/user-attachments/assets/947da432-9125-461a-8cdf-4ac2cbbb2227" />
+
+
 ## Features
 
 - **Natural Language Processing**: Input tasks in plain English
