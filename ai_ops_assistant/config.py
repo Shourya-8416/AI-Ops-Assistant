@@ -24,32 +24,49 @@ class Config:
         Initialize configuration by loading environment variables.
         
         Loads variables from .env file if present, then reads from environment.
+        Also supports Streamlit secrets for cloud deployment.
         """
         # Load environment variables from .env file
         load_dotenv()
         
+        # Try to load from Streamlit secrets if available (for cloud deployment)
+        try:
+            import streamlit as st
+            if hasattr(st, 'secrets'):
+                secrets = st.secrets
+            else:
+                secrets = None
+        except (ImportError, FileNotFoundError):
+            secrets = None
+        
+        # Helper function to get config value from secrets or env
+        def get_config(key: str, default: str = "") -> str:
+            if secrets and key in secrets:
+                return secrets[key]
+            return os.getenv(key, default)
+        
         # LLM Provider Configuration
-        self.llm_provider: str = os.getenv("LLM_PROVIDER", "openai")
+        self.llm_provider: str = get_config("LLM_PROVIDER", "openai")
         
         # OpenAI Configuration
-        self.openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
-        self.openai_model: str = os.getenv("OPENAI_MODEL", "gpt-4")
-        self.openai_base_url: Optional[str] = os.getenv("OPENAI_BASE_URL")
+        self.openai_api_key: str = get_config("OPENAI_API_KEY", "")
+        self.openai_model: str = get_config("OPENAI_MODEL", "gpt-4")
+        self.openai_base_url: Optional[str] = get_config("OPENAI_BASE_URL") or None
         
         # Gemini Configuration
-        self.gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
-        self.gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+        self.gemini_api_key: str = get_config("GEMINI_API_KEY", "")
+        self.gemini_model: str = get_config("GEMINI_MODEL", "gemini-1.5-flash")
         
         # GitHub Configuration (Optional but recommended)
-        self.github_token: Optional[str] = os.getenv("GITHUB_TOKEN")
+        self.github_token: Optional[str] = get_config("GITHUB_TOKEN") or None
         
         # OpenWeather Configuration (Required)
-        self.openweather_api_key: str = os.getenv("OPENWEATHER_API_KEY", "")
+        self.openweather_api_key: str = get_config("OPENWEATHER_API_KEY", "")
         
         # Application Configuration
-        self.log_level: str = os.getenv("LOG_LEVEL", "INFO")
-        self.max_retries: int = int(os.getenv("MAX_RETRIES", "3"))
-        self.request_timeout: int = int(os.getenv("REQUEST_TIMEOUT", "30"))
+        self.log_level: str = get_config("LOG_LEVEL", "INFO")
+        self.max_retries: int = int(get_config("MAX_RETRIES", "3"))
+        self.request_timeout: int = int(get_config("REQUEST_TIMEOUT", "30"))
         
         # Setup logging
         self._setup_logging()
