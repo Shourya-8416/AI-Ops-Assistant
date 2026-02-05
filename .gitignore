@@ -62,7 +62,7 @@ ai_ops_assistant.log
 dmypy.json
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
 # Kiro specs and configuration
 .kiro/
